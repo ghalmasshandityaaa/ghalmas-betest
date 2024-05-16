@@ -2,11 +2,12 @@ import createHttpError from 'http-errors';
 
 import redis from '~/shared/db/redis';
 
-import { User } from './users.model';
-import { UserSchema } from './users.schema';
+import usersRepository from './users.repository';
 
 interface IUsersService {
   getById(userId: string): Promise<any>;
+  getByAccountNumber(accountNumber?: string): Promise<any>;
+  getByIdentityNumber(identityNumber?: string): Promise<any>;
 }
 
 class UsersService implements IUsersService {
@@ -30,17 +31,40 @@ class UsersService implements IUsersService {
     }
 
     // If user is not in cache, query the database
-    const user = await User.findById(userId);
+    const user = await usersRepository.getById(userId);
     if (!user) {
       // If user is not found in the database, throw a NotFound error
       throw new createHttpError.NotFound('User not found');
     }
 
-    // Validate the retrieved user against the schema
-    UserSchema.parse(user);
-
     // Cache the retrieved user in Redis
     await redis.client.set(`user:${user._id}`, JSON.stringify(user));
+
+    // Return the user object
+    return user;
+  }
+
+  async getByAccountNumber(accountNumber?: string): Promise<any> {
+    if (!accountNumber) throw new createHttpError.BadRequest('accountNumber is required');
+
+    const user = await usersRepository.getByAccountNumber(accountNumber);
+    if (!user) {
+      // If user is not found in the database, throw a NotFound error
+      throw new createHttpError.NotFound('User not found');
+    }
+
+    // Return the user object
+    return user;
+  }
+
+  async getByIdentityNumber(identityNumber?: string): Promise<any> {
+    if (!identityNumber) throw new createHttpError.BadRequest('identityNumber is required');
+
+    const user = await usersRepository.getByIdentityNumber(identityNumber);
+    if (!user) {
+      // If user is not found in the database, throw a NotFound error
+      throw new createHttpError.NotFound('User not found');
+    }
 
     // Return the user object
     return user;

@@ -15,6 +15,16 @@ class UserRouter {
 
   initializeRoutes() {
     this.router.get('/me', verifySession, asyncHandler(UserController.me));
+    this.router.get(
+      '/identity/:identityNumber',
+      verifySession,
+      asyncHandler(UserController.getByIdentityNumber),
+    );
+    this.router.get(
+      '/account/:accountNumber',
+      verifySession,
+      asyncHandler(UserController.getByAccountNumber),
+    );
   }
 
   getRouter() {

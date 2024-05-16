@@ -15,6 +15,7 @@ const mongoSchema = z.object({
 
 const redisSchema = z.object({
   REDIS_URI: z.string().url(),
+  REDIS_USERNAME: z.string().optional(),
   REDIS_PASSWORD: z.string().optional(),
 });
 

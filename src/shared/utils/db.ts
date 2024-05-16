@@ -25,6 +25,7 @@ export async function connectToMongoDB() {
 export async function connectToRedis(): Promise<any> {
   const client = createClient({
     url: env.REDIS_URI,
+    username: env.REDIS_USERNAME,
     password: env.REDIS_PASSWORD,
   });
 
