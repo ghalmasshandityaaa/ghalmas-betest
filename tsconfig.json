@@ -1,0 +1,30 @@
+{
+  "extends": "@tqman/tsconfig",
+  "compilerOptions": {
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "incremental": true,
+    "verbatimModuleSyntax": true,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "noEmit": true,
+    "paths": {
+      "~/*": ["src/*"]
+    }
+  },
+  "include": ["src", "scripts"],
+  "exclude": ["node_modules", "dist"]
+}

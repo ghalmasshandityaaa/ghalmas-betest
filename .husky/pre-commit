@@ -1,0 +1,28 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+if [ -t 2 ]; then
+  exec >/dev/tty 2>&1
+fi
+
+echo "** Starting pre-commit hooks...**"
+
+# Improved TypeScript compilation with success/failure indication
+echo "** Compiling TypeScript...**"
+if pnpm build; then
+  echo "**✅ TypeScript compilation successful! ✅**"
+else
+  echo "**❌ TypeScript compilation failed! Please fix errors before committing. ❌**"
+  exit 1  # Exit with non-zero code to indicate failure
+fi
+
+# Format check with success/fail messages and badges
+echo "**✨ Formatting with Prettier... ✨**"
+if pnpm format; then
+  echo "**✅ Formatting successful! Your code is beautifully formatted. ✅**"
+else
+  echo "**⚠️ Formatting failed! Fix formatting issues before committing. ⚠️**"
+  exit 1
+fi
+
+echo "** All pre-commit hooks passed!**"
