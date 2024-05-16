@@ -30,10 +30,9 @@ async function connectToDatabases(): Promise<void> {
  * @return {void} No return value.
  */
 function startServer(app: Express): void {
-  app.listen(env.PORT, env.HOST, () => {
-    ora().info(
-      `${chalk.gray('[Server]')} Started at ${chalk.bold(`http://${env.HOST}:${env.PORT}`)}`,
-    );
+  const PORT = env.PORT || 3000;
+  app.listen(PORT, () => {
+    ora().info(`${chalk.gray('[Server]')} Started at ${chalk.bold(`http://${env.HOST}:${PORT}`)}`);
   });
 }
 
