@@ -22,7 +22,7 @@ export async function connectToMongoDB() {
   });
 }
 
-export async function connectToRedis() {
+export async function connectToRedis(): Promise<any> {
   const client = createClient({
     url: env.REDIS_URI,
     password: env.REDIS_PASSWORD,

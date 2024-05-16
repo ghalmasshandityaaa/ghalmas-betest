@@ -5,7 +5,10 @@ import { handleResponse } from '~/shared/lib/result';
 
 import usersService from './users.service';
 
-class UsersController {
+interface IUsersController {
+  me(req: Request, res: Response<{}, { session: UserSession }>, next: NextFunction): Promise<any>;
+}
+class UsersController implements IUsersController {
   async me(_req: Request, res: Response<{}, { session: UserSession }>, next: NextFunction) {
     try {
       const user = await usersService.getById(res.locals.session.userId);

@@ -5,6 +5,14 @@ import jwt from 'jsonwebtoken';
 import type { UserSession } from './auth.schema';
 import { JwtUtils } from './utils/jwt';
 
+/**
+ * Verifies the session based on the authorization header.
+ *
+ * @param {Request} req - The request object
+ * @param {Response} res - The response object
+ * @param {NextFunction} next - The next function
+ * @return {void} Returns void
+ */
 export function verifySession(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) {

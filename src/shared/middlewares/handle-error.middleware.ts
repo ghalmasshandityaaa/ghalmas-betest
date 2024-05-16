@@ -27,7 +27,21 @@ function handleZodError(err: ZodError): HandledError {
   };
 }
 
-export async function handleError(err: Error, _req: Request, res: Response, _next: NextFunction) {
+/**
+ * Handles errors and sends an appropriate response based on the error type.
+ *
+ * @param {Error} err - The error object to be handled
+ * @param {Request} _req - The request object
+ * @param {Response} res - The response object
+ * @param {NextFunction} _next - The next function
+ * @return {Promise<any>} Returns a Promise that resolves when the response is sent
+ */
+export async function handleError(
+  err: Error,
+  _req: Request,
+  res: Response,
+  _next: NextFunction,
+): Promise<any> {
   const error = match(err)
     .when(err => err instanceof HttpError, handleHttpError)
     .when(err => err instanceof ZodError, handleZodError)

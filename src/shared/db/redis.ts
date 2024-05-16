@@ -1,6 +1,11 @@
 import { connectToRedis } from '../utils/db';
 
+// Import the Redis client type
+
 interface IRedisClient {
+  connect(): Promise<void>;
+  get client(): any;
+
   set(key: string, value: string, options?: { EX: number }): Promise<void>;
   get(key: string): Promise<string | null>;
   del(key: string): Promise<void>;
@@ -16,7 +21,7 @@ class RedisClient implements IRedisClient {
     this._client = await connectToRedis();
   }
 
-  get client() {
+  get client(): any {
     if (!this._client) {
       throw new Error('Redis not initialized');
     }
@@ -24,15 +29,15 @@ class RedisClient implements IRedisClient {
   }
 
   async set(key: string, value: string, options?: { EX: number }): Promise<void> {
-    this.client.set(key, value, options);
+    await this.client.set(key, value, options); // Ensure 'await' for async method
   }
 
   async get(key: string): Promise<string | null> {
-    return this.client.get(key);
+    return await this.client.get(key); // Ensure 'await' for async method
   }
 
   async del(key: string): Promise<void> {
-    this.client.del(key);
+    await this.client.del(key); // Ensure 'await' for async method
   }
 }
 

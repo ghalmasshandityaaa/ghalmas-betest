@@ -1,6 +1,6 @@
 import mongoose, { type CallbackError, Schema } from 'mongoose';
 
-import { hash } from '~/shared/lib/scrypt';
+import scrypt from '~/shared/lib/scrypt';
 
 export const UserEntitySchema = new Schema({
   userName: {
@@ -41,7 +41,7 @@ export const UserEntitySchema = new Schema({
 UserEntitySchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   try {
-    this.password = await hash(this.password);
+    this.password = await scrypt.hash(this.password);
     return next();
   } catch (e) {
     return next(e as CallbackError);
