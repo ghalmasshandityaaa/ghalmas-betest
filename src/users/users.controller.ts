@@ -1,5 +1,4 @@
 import type { NextFunction, Request, Response } from 'express';
-import createHttpError from 'http-errors';
 
 import type { UserSession } from '~/auth/auth.schema';
 import { handleResponse } from '~/shared/lib/result';
